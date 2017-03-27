@@ -1145,7 +1145,7 @@ class FPDF(object):
                 return txt.encode(self.core_fonts_encoding)
         else:
             if not self.unifontsubset and self.core_fonts_encoding:
-                return txt.encode(self.core_fonts_encoding).decode("latin-1")
+                return txt.encode(self.core_fonts_encoding, "ignore").decode("latin-1")
         return txt
 
     def _dochecks(self):
@@ -1223,7 +1223,7 @@ class FPDF(object):
             content = self.pages[n]["content"]
             if self.compress:
                 # manage binary data as latin1 until PEP461 or similar is implemented
-                p = content.encode("latin1") if PY3K else content
+                p = content.encode("latin1", 'ignore') if PY3K else content
                 p = zlib.compress(p)
             else:
                 p = content
